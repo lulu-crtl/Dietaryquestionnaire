@@ -1,0 +1,35 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('.filter-controls input[type="checkbox"]');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            updateGridItems();
+        });
+    });
+
+    function updateGridItems() {
+        const filters = {
+            gyn: document.getElementById('filter-gyn').checked,
+            ob: document.getElementById('filter-ob').checked,
+            ped: document.getElementById('filter-ped').checked,
+            fs: document.getElementById('filter-fs').checked,
+            male: document.getElementById('filter-male').checked,
+        };
+
+        document.querySelectorAll('.grid-item').forEach(item => {
+            const classes = item.classList;
+            let visible = false;
+
+            for (const key in filters) {
+                if (classes.contains(key) && filters[key]) {
+                    visible = true;
+                    break;
+                }
+            }
+
+            item.style.display = visible ? 'block' : 'none';
+        });
+    }
+
+    updateGridItems(); // Initialize on load
+});
